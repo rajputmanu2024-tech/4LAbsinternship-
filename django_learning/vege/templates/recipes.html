@@ -1,0 +1,64 @@
+{% extends "home/common.html" %}
+
+{% block content %}
+
+<div class="container  mt-5" >
+    
+<form class="col-6 mx-auto card p-3 shadow-lg" method ="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h1>Add Recipe</h1>
+    <hr>
+  <div class="mb-3">
+    <label for ="recipe_name" >Recipe Name</label>
+    <input name="recipe_name" type="text" required class="form-control" id="recipe_name" aria-describedby="emailHelp">
+   
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Description</label>
+    <textarea name="recipe_description" class="form-control" id="recipe_description" required></textarea>
+  </div>
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label">Recipe Image</label>
+    <input name="recipe_image" type = "file" class="form-control" id="recipe_image">
+  </div>
+  
+  <button type="submit" class="btn btn-success">Add Recipe</button>
+</form>
+
+   
+   <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Recipe Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Image</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for recipe in recipes %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ recipe.recipe_name }}</td>
+      <td>{{ recipe.recipe_description }}</td>
+      <td>
+    {% if recipe.recipe_image %}
+        <img src="{{ recipe.recipe_image.url }}" width="150" >
+    {% else %}
+        No Image
+    {% endif %}
+</td>
+<td>
+  <a href="/delete_recipe/{{ recipe.id }}/" class="btn btn-danger">Delete</a>
+</td>
+    </tr>
+      {%endfor%}
+  </tbody>
+</table>
+     
+
+</div>
+
+{% endblock %}
