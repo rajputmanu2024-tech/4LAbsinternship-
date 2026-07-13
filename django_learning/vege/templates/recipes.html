@@ -25,7 +25,17 @@
   
   <button type="submit" class="btn btn-success">Add Recipe</button>
 </form>
-
+   <div class="mt-5">
+       <div class = "mx-auto col-6">
+        <form>
+           <div class = "mb-3">
+               <label for="exampleInputPassword1" class="form-label">Search Recipe</label>
+               <input name="recipe_name" value="{{recipe.recipe_name}}"  type = "text">
+               <button type="search" class="btn btn-primary">Search</button>
+            </div>
+            </form>
+       </div>
+    </div>
    
    <table class="table">
   <thead>
@@ -52,6 +62,9 @@
 </td>
 <td>
   <a href="/delete_recipe/{{ recipe.id }}/" class="btn btn-danger">Delete</a>
+</td>
+<td>
+  <a href="/update_recipe/{{ recipe.id }}/" class="btn btn-warning">Update</a>
 </td>
     </tr>
       {%endfor%}
