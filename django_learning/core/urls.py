@@ -26,9 +26,15 @@ urlpatterns = [
     path('', home, name='home'),
     path('about/', about_page, name='about'),
     path('contacts/', contacts_page, name='contacts'),
+
+    path('login/', login_page, name='login'),
+    path('logout/', logout_page, name='logout'),
+    path('register/', register_page, name='register'),
+
+    path('recipes/', recipes, name='recipes'),
     path('delete_recipe/<int:recipe_id>/', delete_recipe, name='delete_recipe'),
     path('update_recipe/<int:recipe_id>/', update_recipe, name='update_recipe'),
-    path('recipes/', recipes, name='recipes'),
+    
     path('admin/', admin.site.urls),
 ]
 

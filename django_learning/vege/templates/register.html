@@ -1,0 +1,117 @@
+{% extends "common.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <form method="POST" class="col-md-6 mx-auto card p-4 shadow-lg">
+
+        {% csrf_token %}
+
+        <h2 class="text-center mb-4">Register</h2>
+
+        <!-- Success Message -->
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == "success" %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <!-- First Name -->
+        <div class="mb-3">
+            <label class="form-label">First Name</label>
+            <input
+                type="text"
+                class="form-control"
+                name="first_name"
+                placeholder="Enter First Name"
+                required>
+        </div>
+
+        <!-- Last Name -->
+        <div class="mb-3">
+            <label class="form-label">Last Name</label>
+            <input
+                type="text"
+                class="form-control"
+                name="last_name"
+                placeholder="Enter Last Name"
+                required>
+        </div>
+
+        <!-- Username -->
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input
+                type="text"
+                class="form-control"
+                name="username"
+                placeholder="Enter Username"
+                required>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+                type="email"
+                class="form-control"
+                name="email"
+                placeholder="Enter Email"
+                required>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input
+                type="password"
+                class="form-control"
+                name="password"
+                placeholder="Enter Password"
+                required>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+
+            <input
+                type="password"
+                class="form-control"
+                name="confirm_password"
+                placeholder="Confirm Password"
+                required>
+
+            <!-- Error Message -->
+            {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == "error" %}
+                        <small class="text-danger">
+                            {{ message }}
+                        </small>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+            Register
+        </button>
+
+        <div class="text-center mt-3">
+            Already have an account?
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

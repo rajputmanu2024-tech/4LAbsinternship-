@@ -1,0 +1,123 @@
+{% extends "common.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <!-- Hero Section -->
+    <div class="p-5 mb-5 bg-light rounded-3 shadow">
+        <div class="container-fluid py-5 text-center">
+
+            <h1 class="display-4 fw-bold">
+                🍽️ Welcome to Recipe Management System
+            </h1>
+
+            <p class="fs-5 text-muted mt-3">
+                Discover, create, update, and manage your favorite recipes in one place.
+            </p>
+
+            <a href="{% url 'recipes' %}" class="btn btn-success btn-lg mt-3">
+                View Recipes
+            </a>
+
+        </div>
+    </div>
+
+    <!-- Features -->
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body">
+
+                    <h2>🥗</h2>
+
+                    <h4 class="card-title">
+                        Add Recipes
+                    </h4>
+
+                    <p class="card-text">
+                        Create delicious recipes with descriptions and upload beautiful food images.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body">
+
+                    <h2>✏️</h2>
+
+                    <h4 class="card-title">
+                        Update Recipes
+                    </h4>
+
+                    <p class="card-text">
+                        Edit recipe names, descriptions, and images whenever you want.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body">
+
+                    <h2>🗑️</h2>
+
+                    <h4 class="card-title">
+                        Manage Recipes
+                    </h4>
+
+                    <p class="card-text">
+                        Search, delete, and organize your recipes quickly and easily.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- About Section -->
+    <div class="row mt-5">
+
+        <div class="col-lg-6">
+            <img
+                src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=800"
+                class="img-fluid rounded shadow"
+                alt="Food">
+        </div>
+
+        <div class="col-lg-6 d-flex align-items-center">
+
+            <div>
+
+                <h2>Why Choose Our Recipe App?</h2>
+
+                <p class="lead">
+                    Our Recipe Management System helps you organize your favorite dishes,
+                    upload recipe images, search recipes instantly, and manage everything
+                    from one dashboard.
+                </p>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">✅ User Authentication</li>
+                    <li class="list-group-item">✅ Add, Update & Delete Recipes</li>
+                    <li class="list-group-item">✅ Image Upload Support</li>
+                    <li class="list-group-item">✅ Search Functionality</li>
+                    <li class="list-group-item">✅ Responsive Bootstrap Design</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
