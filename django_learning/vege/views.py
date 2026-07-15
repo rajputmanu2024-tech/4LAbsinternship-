@@ -21,9 +21,10 @@ def recipes(request):
         recipe_image = request.FILES.get("recipe_image")
 
         Recipe.objects.create(
+            user=request.user,
             recipe_name=recipe_name,
             recipe_description=recipe_description,
-            recipe_image=recipe_image
+            recipe_image=recipe_image,
         )
 
         return redirect("recipes")
@@ -44,15 +45,23 @@ def recipes(request):
 
 @login_required(login_url="login")
 def delete_recipe(request, recipe_id):
-    queryset = Recipe.objects.get(id=recipe_id)
-    queryset.delete()
+    recipe = get_object_or_404(
+    Recipe,
+    id=recipe_id,
+    user=request.user
+    )
+    recipe.delete()
     return redirect('recipes')
 
 
 
 @login_required(login_url="login")
 def update_recipe(request, recipe_id):
-    recipe = get_object_or_404(Recipe, id=recipe_id)
+    recipe = get_object_or_404(
+    Recipe,
+    id=recipe_id,
+    user=request.user
+    )     
 
     if request.method == "POST":
         recipe.recipe_name = request.POST.get("recipe_name")

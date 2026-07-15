@@ -2,75 +2,222 @@
 
 {% block content %}
 
-<div class="container  mt-5" >
-    
-<form class="col-6 mx-auto card p-3 shadow-lg" method ="post" enctype="multipart/form-data">
-    {% csrf_token %}
+<div class="container mt-5">
 
-    <h1>Add Recipe</h1>
-    <hr>
-  <div class="mb-3">
-    <label for ="recipe_name" >Recipe Name</label>
-    <input name="recipe_name" type="text" required class="form-control" id="recipe_name" aria-describedby="emailHelp">
-   
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Description</label>
-    <textarea name="recipe_description" class="form-control" id="recipe_description" required></textarea>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Recipe Image</label>
-    <input name="recipe_image" type = "file" class="form-control" id="recipe_image">
-  </div>
-  
-  <button type="submit" class="btn btn-success">Add Recipe</button>
-</form>
-   <div class="mt-5">
-       <div class = "mx-auto col-6">
-        <form>
-           <div class = "mb-3">
-               <label for="exampleInputPassword1" class="form-label">Search Recipe</label>
-               <input name="recipe_name" value="{{recipe.recipe_name}}"  type = "text">
-               <button type="search" class="btn btn-primary">Search</button>
-            </div>
-            </form>
-       </div>
-    </div>
-   
-   <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Recipe Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Image</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for recipe in recipes %}
-    <tr>
-      <th scope="row">{{ forloop.counter }}</th>
-      <td>{{ recipe.recipe_name }}</td>
-      <td>{{ recipe.recipe_description }}</td>
-      <td>
-    {% if recipe.recipe_image %}
-        <img src="{{ recipe.recipe_image.url }}" width="150" >
+    <!-- Add Recipe Form -->
+    {% if user.is_authenticated %}
+
+    <form class="col-md-6 mx-auto card shadow-lg p-4 mb-5"
+          method="POST"
+          enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <h2 class="text-center">Add Recipe</h2>
+        <hr>
+
+        <div class="mb-3">
+            <label class="form-label">Recipe Name</label>
+            <input
+                type="text"
+                name="recipe_name"
+                class="form-control"
+                placeholder="Enter Recipe Name"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea
+                name="recipe_description"
+                class="form-control"
+                rows="4"
+                placeholder="Enter Recipe Description"
+                required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Recipe Image</label>
+            <input
+                type="file"
+                name="recipe_image"
+                class="form-control">
+        </div>
+
+        <button class="btn btn-success w-100">
+            Add Recipe
+        </button>
+
+    </form>
+
     {% else %}
-        No Image
+
+    <div class="alert alert-info text-center">
+
+        <h5>You are not logged in</h5>
+
+        <p>
+            Login to add your own recipes.
+        </p>
+
+        <a href="{% url 'login' %}"
+           class="btn btn-primary">
+            Login
+        </a>
+
+    </div>
+
     {% endif %}
-</td>
-<td>
-  <a href="/delete_recipe/{{ recipe.id }}/" class="btn btn-danger">Delete</a>
-</td>
-<td>
-  <a href="/update_recipe/{{ recipe.id }}/" class="btn btn-warning">Update</a>
-</td>
-    </tr>
-      {%endfor%}
-  </tbody>
-</table>
-     
+
+    <!-- Search -->
+
+    <div class="col-md-6 mx-auto mb-4">
+
+        <form method="GET">
+
+            <label class="form-label">
+                Search Recipe
+            </label>
+
+            <div class="input-group">
+
+                <input
+                    type="text"
+                    class="form-control"
+                    name="search"
+                    value="{{ request.GET.search }}"
+                    placeholder="Search by recipe name">
+
+                <button
+                    class="btn btn-primary"
+                    type="submit">
+
+                    Search
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Recipe Table -->
+
+    <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>#</th>
+                <th>Recipe Name</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Added By</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% if recipes %}
+
+            {% for recipe in recipes %}
+
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <td>
+                    {{ recipe.recipe_name }}
+                </td>
+
+                <td>
+                    {{ recipe.recipe_description }}
+                </td>
+
+                <td>
+
+                    {% if recipe.recipe_image %}
+
+                        <img
+                            src="{{ recipe.recipe_image.url }}"
+                            width="150"
+                            height="100"
+                            style="object-fit:cover;">
+
+                    {% else %}
+
+                        No Image
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <span class="badge bg-primary">
+
+                        {{ recipe.user.username }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    {% if user == recipe.user %}
+
+                        <a
+                            href="{% url 'update_recipe' recipe.id %}"
+                            class="btn btn-warning btn-sm">
+
+                            Update
+
+                        </a>
+
+                        <a
+                            href="{% url 'delete_recipe' recipe.id %}"
+                            class="btn btn-danger btn-sm">
+
+                            Delete
+
+                        </a>
+
+                    {% else %}
+
+                        <span class="text-secondary">
+                            🔒 Owner Only
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+
+                    No recipes available.
+
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+        </tbody>
+
+    </table>
 
 </div>
 
