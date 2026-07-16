@@ -18,9 +18,13 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
+# from . import views
 
 from home.views import *
 from vege.views import *
+from student.views import *
+
+app_name = 'student'
 
 urlpatterns = [
     path('', home, name='home'),
@@ -30,6 +34,11 @@ urlpatterns = [
     path('login/', login_page, name='login'),
     path('logout/', logout_page, name='logout'),
     path('register/', register_page, name='register'),
+
+
+    path('student/', student_list, name='student_list'),\
+    path(' ', student_home, name='student_home'),
+    
 
     path('recipes/', recipes, name='recipes'),
     path('delete_recipe/<int:recipe_id>/', delete_recipe, name='delete_recipe'),
